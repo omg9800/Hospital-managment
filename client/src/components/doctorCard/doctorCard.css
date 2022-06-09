@@ -1,0 +1,57 @@
+.card {
+  margin: auto;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 20px;
+  width: 80%;
+  height: 250;
+  transition: transform 0.2s;
+  background-image: linear-gradient(to bottom, #ffd8f9, #ac306d);
+  box-shadow: 0 2px 0 black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 3%;
+}
+
+p {
+  margin: 5px !important;
+}
+
+.card-container:hover {
+  transform: scale(1.02);
+}
+
+.school-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.col {
+  display: flex;
+  justify-content: space-between;
+}
+
+.group2 {
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+  overflow-wrap: break-word;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.buttons {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 20px;
+}
