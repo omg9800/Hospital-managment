@@ -12,42 +12,41 @@ const { Staff, validateStaff } = require('../models/staff');
 //API CALLS
 
 //POST CALL 
-router.post('/', async (req,res) => {
-      const { error } = validate(req.body);
-      if(error) return res.status(400).send(error.details[0].message);
-      
-      if(req.body.isDoctor)
-      {
-      let doctor = await Doctor.findOne({ email: req.body.email });
-      if (!doctor) return res.status(400).send('Invalid emaiil or password');
-    
-      //Encrypting password
-      const validPassword = await bcrypt.compare(req.body.password,doctor.password);
-      if (!validPassword) return res.status(400).send('Invalid email or passwword');
-      
-      const token = doctor.generateAuthToken();
-      res.send(token);
-      }
-      else if(req.body.isStaff){
-         // console.log("Staff");
+router.post('/', async (req, res) => {
+    const { error } = validate(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    if (req.body.role === 'doctor') {
+        let doctor = await Doctor.findOne({ email: req.body.email });
+        if (!doctor) return res.status(400).send('Invalid emaiil or password');
+
+        //Encrypting password
+        const validPassword = await bcrypt.compare(req.body.password, doctor.password);
+        if (!validPassword) return res.status(400).send('Invalid email or passwword');
+
+        const token = doctor.generateAuthToken();
+        // doctor = _.pick(doctor, ['-passwor']);
+        res.send({ doctor, token: token });
+    }
+    else if (req.body.role === 'admin' || req.body.role === 'staff') {
+        // console.log("Staff");
         let staff = await Staff.findOne({ email: req.body.email });
         if (!staff) return res.status(400).send('Invalid emaiil or password');
-      
+
         //Encrypting password
-        const validPassword = await bcrypt.compare(req.body.password,staff.password);
+        const validPassword = await bcrypt.compare(req.body.password, staff.password);
         if (!validPassword) return res.status(400).send('Invalid email or passwword');
-        
+
         const token = staff.generateAuthToken();
         res.send(token);
-      }
+    }
 });
 
 const validate = req => {
     const Schema = Joi.object({
-        email : Joi.string().min(5).max(255).required().email(),
+        email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(5).max(255).required(),
-        isStaff:Joi.boolean(),
-        isDoctor:Joi.boolean(),
+        role: Joi.string(),
     })
     return Schema.validate(req);
 };

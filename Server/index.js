@@ -8,18 +8,20 @@ const staffs = require('./routes/staffs');
 const appointments = require('./routes/appointments');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const cors = require('cors');
 
-//console.log(config.get('jwtPrivateKey'));
-if(!config.get('jwtPrivateKey')) {
+console.log(config.get('jwtPrivateKey'));
+if (!config.get('jwtPrivateKey')) {
         // $env:vidly_jwtPrivateKey="mySecureKey" -> command to set TO set environment variable
-       console.log('FATAL ERROR: jwtPrivateKey is not defined.');
-       process.exit(1);
-    }
+        console.log('FATAL ERROR: jwtPrivateKey is not defined.');
+        process.exit(1);
+}
 
 mongoose.connect('mongodb://localhost/hospital')
         .then(() => console.log('Connected to MongoDB...'))
         .catch(err => console.error('Could not connect to MongoDB...'));
 
+app.use(cors());
 app.use(express.json());
 app.use('/api/patients', patients);
 app.use('/api/doctors', doctors);
