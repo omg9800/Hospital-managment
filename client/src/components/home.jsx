@@ -3,7 +3,7 @@ import { Redirect, Route, useHistory } from "react-router-dom";
 
 function Home() {
   const [person, setPerson] = useState({
-    username: "",
+    email: "",
     password: "",
     role: "admin",
   });
@@ -17,11 +17,36 @@ function Home() {
     setPerson((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
+
+    try {
+      
+   let res=await fetch('http://localhost:3000/api/auth',{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(person)});
+   
+    res=await res.json();
+
+    const {doctor,token}=res;
+
+    localStorage.setItem('doctor',JSON.stringify(doctor));
+    localStorage.setItem('token',token);
+
     if (person.role === "admin") history.push("/admin");
     else if (person.role === "doctor") history.push("/doctor");
     else if (person.role === "staff") history.push("/staff");
-    e.preventDefault();
+
+     e.preventDefault();
+      
+    } catch (error) {
+      console.log(error);
+    }
+   
+
+   
   };
 
   return (
@@ -36,9 +61,9 @@ function Home() {
         </li>
         <li>
           <input
-            placeholder="Username"
+            placeholder="Email"
             type="text"
-            name="username"
+            name="email"
             value={person.username}
             onChange={handleChange}
           />
