@@ -1,32 +1,64 @@
-import React, { Component } from "react";
+import React, { useEffect,useState } from "react";
 
-class AddDoctor extends React.Component {
-  state = {
+
+
+const AddDoctor = () => {
+
+  const [doctor, setDoctor] = useState({
     name: "",
     age: "",
-    gender: "",
-    phone: "",
+    phone:"",
     email: "",
     address: "",
-  };
+    password:"",
+    specialization:"",
+    about:"",
+    role:"doctor",
+    password:""
+  });
 
-  handleChange = (e) => {
+   const handleChange = (e) => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value });
+    setDoctor(prev=>({...prev, [name]: value }));
   };
 
-  handleSubmit = (e) => {
-    console.log(this.state);
+  const addDoctor = async(e) => {
+     try {
+      
+   let res=await fetch('http://localhost:3000/api/users',{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(doctor)});
+   
+    res=await res.json();
 
-    e.preventDefault();
+    const {staff,token}=res;
+
+    console.log(res);
+
+    // localStorage.setItem('admin',JSON.stringify(staff));
+    // localStorage.setItem('token',token);
+
+    // if (person.role === "admin") history.push("/admin");
+   
+
+     e.preventDefault();
+      
+    } catch (error) {
+      console.log(error);
+    }
+   
+
   };
 
-  render() {
-    return (
+ return (
       <div className="form-container">
-        <form>
+        
+        <div className="form">
           <li>
             <h1>Add Doctor</h1>
           </li>
@@ -35,8 +67,8 @@ class AddDoctor extends React.Component {
               placeholder="Name"
               type="text"
               name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
+              value={doctor.name}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -44,8 +76,8 @@ class AddDoctor extends React.Component {
               placeholder="Age"
               type="number"
               name="age"
-              value={this.state.age}
-              onChange={this.handleChange}
+              value={doctor.age}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -53,8 +85,8 @@ class AddDoctor extends React.Component {
               placeholder="Phone"
               type="text"
               name="phone"
-              value={this.state.phone}
-              onChange={this.handleChange}
+              value={doctor.phone}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -62,8 +94,28 @@ class AddDoctor extends React.Component {
               placeholder="Email"
               type="email"
               name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
+              value={doctor.email}
+              onChange={handleChange}
+            />
+          </li>
+
+           <li>
+            <input
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={doctor.password}
+              onChange={handleChange}
+            />
+          </li>
+
+               <li>
+            <input
+              placeholder="Specialization"
+              type="text"
+              name="specialization"
+              value={doctor.specialization}
+              onChange={handleChange}
             />
           </li>
 
@@ -72,17 +124,30 @@ class AddDoctor extends React.Component {
               placeholder="Address"
               type="text"
               name="address"
-              value={this.state.address}
-              onChange={this.handleChange}
+              value={doctor.address}
+              onChange={handleChange}
             />
           </li>
-          <li>
-            <button onClick={this.handleSubmit}>ADD</button>
+
+           <li>
+            <textarea
+              placeholder="About"
+              type="text"
+              name="about"
+              value={doctor.about}
+              onChange={handleChange}
+            />
           </li>
-        </form>
+
+</div>
+          <li>
+            <button onClick={addDoctor}>ADD</button>
+          </li>
+        
       </div>
-    );
-  }
+  )
 }
 
 export default AddDoctor;
+
+

@@ -48,10 +48,11 @@ router.post('/', async (req, res) => {
     await doctor.save();
     const token = doctor.generateAuthToken();
     doctor = _.pick(doctor, ['name', 'email', '_id', 'role']);
-    res.header('x-auth-token', token).send(doctor);
+    res.send({ doctor, token });
   }
 
   else if (req.body.role === 'admin' || req.body.role === 'staff') {
+    console.log('admin');
     const { error } = validateStaff(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -80,7 +81,7 @@ router.post('/', async (req, res) => {
     await staff.save();
     const token = staff.generateAuthToken();
     staff = _.pick(staff, ['name', 'email', '_id', 'role']);
-    res.header('x-auth-token', token).send(staff);
+    res.send({ staff, token });
   }
 });
 

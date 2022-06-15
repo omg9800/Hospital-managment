@@ -7,7 +7,7 @@ import AdminMenu from "./adminMenu";
 import DoctorMenu from "./doctorsMenu";
 import StaffMenu from "./staffMenu";
 import ViewStaff from "./staffDetails";
-import ViewDoctor from "../doctorList";
+import ViewDoctor from "./doctorDetails";
 import ViewAdmin from "./adminDetails";
 import AddAdmin from "./addAdmin";
 import AddDoctor from "./addDoctor";
@@ -34,11 +34,7 @@ const Menu=()=>  {
                 Doctors
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/admin/admin-menu">
-                Admins
-              </NavLink>
-            </li>
+            
             <li className="nav-item">
               <NavLink className="nav-link" to="/admin/staff-menu">
                 Staffs

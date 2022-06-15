@@ -1,29 +1,46 @@
-import React, { Component } from "react";
+import React, { useEffect,useState} from "react";
 import userlogo from "../../styles/user.png";
-class DoctorProfile extends React.Component {
-  state = {
-    profile: [
-      "Omprakash Kumar",
-      "9929465066",
-      "omg982000@gmail.com",
-      "Patna, Bihar",
-    ],
-  };
-  render() {
-    return (
-      <div className="App">
+
+
+const DoctorProfile = () => {
+
+  const [doctor, setDoctor] = useState({
+    name:"",
+    age:"",
+    phone:"",
+    email:"",
+    address:"",
+    about:""
+  });
+
+  useEffect(() => {
+    
+  let doctor=JSON.parse(localStorage.getItem('doctor'));
+  const {name,email,phone,address,about}=doctor;
+  setDoctor({name,email,phone,address,about});
+  
+  }, [])
+  
+
+  return (
+     <div className="App">
         <div className="myprofile">
           <img src={userlogo} />
 
           <ul>
-            {this.state.profile.map((m) => (
-              <li>{m}</li>
-            ))}
+          
+              <li>{ doctor.name}</li>
+              <li>{ doctor.phone}</li>
+              <li>{ doctor.email}</li>
+              <li>{ doctor.address}</li>
+              <li>{ doctor.about}</li>
+          
           </ul>
         </div>
       </div>
-    );
-  }
+  )
 }
 
-export default DoctorProfile;
+export default DoctorProfile
+
+

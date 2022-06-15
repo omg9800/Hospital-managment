@@ -30,10 +30,16 @@ function Home() {
    
     res=await res.json();
 
-    const {doctor,token}=res;
-
+    const {doctor,token,staff}=res;
+    
+    if(doctor)
+    {
     localStorage.setItem('doctor',JSON.stringify(doctor));
-    localStorage.setItem('token',token);
+    }
+    else{
+      localStorage.setItem('staff',JSON.stringify(staff));
+    }
+    localStorage.setItem(`${person.role}-token`,JSON.stringify(token));
 
     if (person.role === "admin") history.push("/admin");
     else if (person.role === "doctor") history.push("/doctor");

@@ -1,30 +1,33 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from "react";
 
-class Staff extends React.Component {
-  state = {
+
+const AddPatient = () => {
+
+  const [patient, setPatient] = useState({
     name: "",
     age: "",
     weight: 0,
-    problem: "",
+    symptoms: "",
     address: "",
-  };
+    phone:""
 
-  handleChange = (e) => {
+  })
+
+ const handleChange = (e) => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value });
+    setPatient(prev=>({...prev, [name]: value }));
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     console.log(this.state);
 
     e.preventDefault();
   };
 
-  render() {
-    return (
-      <div className="form-container">
+  return (
+    <div className="form-container">
         <form>
           <li>
             <h1>Add Patient</h1>
@@ -34,8 +37,8 @@ class Staff extends React.Component {
               placeholder="Name"
               type="text"
               name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
+              value={patient.name}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -43,8 +46,8 @@ class Staff extends React.Component {
               placeholder="Age"
               type="number"
               name="age"
-              value={this.state.age}
-              onChange={this.handleChange}
+              value={patient.age}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -52,8 +55,8 @@ class Staff extends React.Component {
               placeholder="Weight"
               type="number"
               name="weight"
-              value={this.state.weight}
-              onChange={this.handleChange}
+              value={patient.weight}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -61,8 +64,8 @@ class Staff extends React.Component {
               placeholder="Problem"
               type="text"
               name="problem"
-              value={this.state.problem}
-              onChange={this.handleChange}
+              value={patient.problem}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -70,17 +73,18 @@ class Staff extends React.Component {
               placeholder="Address"
               type="text"
               name="address"
-              value={this.state.address}
-              onChange={this.handleChange}
+              value={patient.address}
+              onChange={handleChange}
             />
           </li>
           <li>
-            <button onClick={this.handleSubmit}>ADD</button>
+            <button onClick={handleSubmit}>ADD</button>
           </li>
         </form>
       </div>
-    );
-  }
+  )
 }
 
-export default Staff;
+export default AddPatient;
+
+

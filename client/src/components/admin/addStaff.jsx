@@ -1,32 +1,60 @@
-import React, { Component } from "react";
+import React, { useEffect,useState } from "react";
 
-class AddStaff extends React.Component {
-  state = {
+const AddStaff = () => {
+
+  const [staff, setStaff] = useState({
     name: "",
     age: "",
-    gender: "",
-    phone: "",
+    phone:"",
     email: "",
     address: "",
-  };
+    password:"",
+    role:"staff",
+    password:""
+  });
 
-  handleChange = (e) => {
+   const handleChange = (e) => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value });
+    setStaff(prev=>({...prev, [name]: value }));
   };
 
-  handleSubmit = (e) => {
-    console.log(this.state);
+  const addStaff = async(e) => {
+     try {
+      
+   let res=await fetch('http://localhost:3000/api/users',{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(staff)});
+   
+    res=await res.json();
 
-    e.preventDefault();
+    // const {staff,token}=res;
+
+    console.log(res);
+
+    // localStorage.setItem('admin',JSON.stringify(staff));
+    // localStorage.setItem('token',token);
+
+    // if (person.role === "admin") history.push("/admin");
+   
+
+     e.preventDefault();
+      
+    } catch (error) {
+      console.log(error);
+    }
+   
+
   };
 
-  render() {
-    return (
+ return (
       <div className="form-container">
-        <form>
+        
+        <div className="form">
           <li>
             <h1>Add Staff</h1>
           </li>
@@ -35,8 +63,8 @@ class AddStaff extends React.Component {
               placeholder="Name"
               type="text"
               name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
+              value={staff.name}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -44,8 +72,8 @@ class AddStaff extends React.Component {
               placeholder="Age"
               type="number"
               name="age"
-              value={this.state.age}
-              onChange={this.handleChange}
+              value={staff.age}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -53,8 +81,8 @@ class AddStaff extends React.Component {
               placeholder="Phone"
               type="text"
               name="phone"
-              value={this.state.phone}
-              onChange={this.handleChange}
+              value={staff.phone}
+              onChange={handleChange}
             />
           </li>
           <li>
@@ -62,8 +90,18 @@ class AddStaff extends React.Component {
               placeholder="Email"
               type="email"
               name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
+              value={staff.email}
+              onChange={handleChange}
+            />
+          </li>
+
+           <li>
+            <input
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={staff.password}
+              onChange={handleChange}
             />
           </li>
 
@@ -72,17 +110,22 @@ class AddStaff extends React.Component {
               placeholder="Address"
               type="text"
               name="address"
-              value={this.state.address}
-              onChange={this.handleChange}
+              value={staff.address}
+              onChange={handleChange}
             />
           </li>
+
+           
+
+</div>
           <li>
-            <button onClick={this.handleSubmit}>ADD</button>
+            <button onClick={addStaff}>ADD</button>
           </li>
-        </form>
+        
       </div>
-    );
-  }
+  )
 }
 
 export default AddStaff;
+
+

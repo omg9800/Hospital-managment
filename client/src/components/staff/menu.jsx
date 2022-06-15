@@ -4,7 +4,7 @@ import { NavLink, Link, Route, Switch } from "react-router-dom";
 import ViewPatient from "../patientList";
 import AddPatient from "./addPatient";
 import Profile from "./staffProfile";
-import DoctorList from "../doctorList";
+import DoctorList from "../admin/doctorDetails";
 
 class Menu extends React.Component {
   render() {

@@ -1,29 +1,46 @@
-import React, { Component } from "react";
+import React, { useEffect,useState} from "react";
 import userlogo from "../../styles/user.png";
-class AdminProfile extends React.Component {
-  state = {
-    profile: [
-      "Omprakash Kumar",
-      "9929465066",
-      "omg982000@gmail.com",
-      "Patna, Bihar",
-    ],
-  };
-  render() {
-    return (
-      <div className="App">
+
+
+const AdminProfile = () => {
+
+  const [staff, setStaff] = useState({
+    name:"",
+    age:"",
+    phone:"",
+    email:"",
+    address:"",
+    about:""
+  });
+
+  useEffect(() => {
+    
+  let staff=JSON.parse(localStorage.getItem('staff'));
+  const {name,email,phone,address,about}=staff;
+  setStaff({name,email,phone,address,about});
+  
+  }, [])
+  
+
+  return (
+     <div className="App">
         <div className="myprofile">
           <img src={userlogo} />
 
           <ul>
-            {this.state.profile.map((m) => (
-              <li>{m}</li>
-            ))}
+          
+              <li>{ staff.name}</li>
+              <li>{ staff.phone}</li>
+              <li>{ staff.email}</li>
+              <li>{ staff.address}</li>
+              <li>{ staff.about}</li>
+          
           </ul>
         </div>
       </div>
-    );
-  }
+  )
 }
 
-export default AdminProfile;
+export default AdminProfile
+
+
