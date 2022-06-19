@@ -20,12 +20,12 @@ router.get('/me', auth, async (req, res) => {
 //POST CALL 
 router.post('/', async (req, res) => {
   if (req.body.role === 'doctor') {
+    try{
     const { error } = validateDoctor(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let user = await Doctor.findOne({ email: req.body.email });
-    if (user) return res.status(400).send('User already registered ');
-    let doctor;
+    let doctor = await Doctor.findOne({ email: req.body.email });
+    if (doctor) return res.status(400).send('User already registered ');
 
     doctor = new Doctor({
       name: req.body.name,
@@ -38,27 +38,28 @@ router.post('/', async (req, res) => {
       password: req.body.password,
       role: req.body.role
     });
-    //doctor = await doctor.save();
 
-    //hashing using bcrypt
-    //  user = new Doctor(_.pick(req.body, ['name','email','password', 'isAdmin', 'isDoctor', 'isStaff']));
     const salt = await bcrypt.genSalt(10);
     doctor.password = await bcrypt.hash(doctor.password, salt);
 
     await doctor.save();
+
     const token = doctor.generateAuthToken();
     doctor = _.pick(doctor, ['name', 'email', '_id', 'role']);
     res.send({ doctor, token });
   }
+  catch(error){
+    console.log(error);
+  }
+  }
 
   else if (req.body.role === 'admin' || req.body.role === 'staff') {
-    console.log('admin');
+    try{
     const { error } = validateStaff(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     let staff = await Staff.findOne({ email: req.body.email });
     if (staff) return res.status(400).send('User already registered ');
-    let doctor;
 
     const result = validateStaff(req.body);
     if (result.error) return res.status(400).send(result.error.details[0].message);
@@ -72,16 +73,18 @@ router.post('/', async (req, res) => {
       password: req.body.password,
       role: req.body.role
     });
-    //staff = await staff.save();
 
     const salt = await bcrypt.genSalt(10);
-    console.log(staff.password);
     staff.password = await bcrypt.hash(staff.password, salt);
 
     await staff.save();
     const token = staff.generateAuthToken();
     staff = _.pick(staff, ['name', 'email', '_id', 'role']);
     res.send({ staff, token });
+  }
+  catch(error){
+    console.log(error);
+  }
   }
 });
 

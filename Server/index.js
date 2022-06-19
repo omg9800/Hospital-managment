@@ -10,9 +10,9 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const cors = require('cors');
 
-console.log(config.get('jwtPrivateKey'));
+//console.log(config.get('jwtPrivateKey'));
 if (!config.get('jwtPrivateKey')) {
-        // $env:vidly_jwtPrivateKey="mySecureKey" -> command to set TO set environment variable
+        // $env:hospital_jwtPrivateKey="mySecureKey" -> command to set TO set environment variable
         console.log('FATAL ERROR: jwtPrivateKey is not defined.');
         process.exit(1);
 }

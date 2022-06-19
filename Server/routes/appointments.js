@@ -11,8 +11,7 @@ const { Patient, validatePatient } = require('../models/patient');
 
 //API CALLS
 router.get('/', [auth,doctor_staff_admin] , async (req,res) => {
-    const appointments = await Appointment.find();
-                                          // .populate('patient');                                           
+    const appointments = await Appointment.find();                                       
    res.send(appointments);
 });
 
@@ -23,15 +22,33 @@ router.post('/', [auth,doctor_staff_admin] , async (req,res) => {
     const doctor = await Doctor.findById(req.body.doctorId);
     if(!doctor) return res.status(404).send('Doctor Not Found');
 
-    const patient = await Patient.findById(req.body.patientId);
-    if(!patient) return  res.status(404).send('Patient Not Found');
-   //console.log(req.body.doctorId,req.body.patientId);
     let appointment = new Appointment({
-        doctor: req.body.doctorId,
-        patient: req.body.patientId
+        doctorId: req.body.doctorId,
+        name: req.body.name,
+        age: req.body.age,
+        weight: req.body.weight,
+        phone: req.body.phone,
+        symptoms: req.body.symptoms,
+        address:req.body.address,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role
     });
     appointment = await appointment.save();
     
+    let patient = new Patient({
+        name: req.body.name,
+        age: req.body.age,
+        weight: req.body.weight,
+        phone: req.body.phone,
+        symptoms: req.body.symptoms,
+        address:req.body.address,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role
+    });
+    
+    patient = await patient.save();
     res.send(appointment);
 });
 
@@ -50,7 +67,13 @@ router.delete('/:id1/:id2', [auth,doctor_staff_admin] , async (req,res) => {
     doctor = await Appointment.deleteOne({doctor: doctor_id, patient:patient_id});
     res.send(doctor);
 
+});
 
+router.get('/:id', [auth,doctor_staff_admin] , async (req,res) => {
+    const appointments = await Appointment.findById(req.params.id);
+    if(!appointment) return res.status(404).send("There is no appointment");
+
+    res.send(appointment);
 });
 
 module.exports = router;

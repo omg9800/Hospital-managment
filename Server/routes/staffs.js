@@ -8,15 +8,21 @@ const { Staff, validateStaff } = require('../models/staff');
 
 //API CALLS
 
-//GET ALL PATIENT CALL
+//GET ALL STAFFS CALL
 
 router.get('/',[auth,admin], async (req,res) => {
-     const patients = await Staff.find().sort('name');
-     res.send(patients);
+    try{
+     const staffs = await Staff.find().sort('name');
+     res.send(staffs);
+    }
+    catch(error){
+        console.log(error);
+    }
 });
 
 //PUT CALL
 router.put('/:id',[auth,admin], async (req,res) => {
+    try{
     const result = validateStaff(req.body);
     if(result.error) return res.status(400).send(result.error.details[0].message);
 
@@ -36,22 +42,36 @@ router.put('/:id',[auth,admin], async (req,res) => {
 
     if(!staff) return res.status(404).send("The staff is not found");
     res.send(staff);
+    }
+    catch(error){
+        console.log(error);
+    }
 });
 
 //DELETE CALL
 router.delete('/:id',[auth,admin], async (req,res) => {
+    try{
     let staff = await Staff.deleteOne({_id: req.params.id });
-    if(!staff)   return res.status(404).send("The genre is not found")
+    if(!staff)   return res.status(404).send("The staff is not found")
 
     res.send(staff);
+    }
+    catch(error){
+        console.log(error);
+    }
 });
 
 //GET A SINGLE ID
 router.get('/:id', [auth,admin] , async (req,res) => {
+    try{
     const staff = await Staff.findById(req.params.id);
-    if(!staff) return res.status(404).send("The Staff is not found");
+    if(!staff) return res.status(404).send("The staff is not found");
 
     res.send(staff);
+    }
+    catch(error){
+        console.log(error);
+    }
 });
 
 module.exports = router;

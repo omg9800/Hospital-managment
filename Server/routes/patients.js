@@ -51,6 +51,9 @@ router.put('/:id',[auth,staff_admin], async (req,res) => {
         patient.phone = req.body.phone;
         patient.symptoms = req.body.symptoms;
         patient.address = req.body.address;
+        patient.email = req.body.email;
+        patient.password = req.body.password;
+        patient.role= req.body.role;
     }
 
     patient  = await patient.save();

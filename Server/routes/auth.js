@@ -6,8 +6,8 @@ const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { Doctor, validateDoctor } = require('../models/doctor');
-const { Staff, validateStaff } = require('../models/staff');
+const { Doctor } = require('../models/doctor');
+const { Staff } = require('../models/staff');
 
 //API CALLS
 
@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     if (req.body.role === 'doctor') {
+        try{
         let doctor = await Doctor.findOne({ email: req.body.email });
         if (!doctor) return res.status(400).send('Invalid emaiil or password');
 
@@ -25,11 +26,15 @@ router.post('/', async (req, res) => {
         if (!validPassword) return res.status(400).send('Invalid email or passwword');
 
         const token = doctor.generateAuthToken();
-        // doctor = _.pick(doctor, ['-passwor']);
+        doctor = _.pick(doctor, ['name','age','phone','specialization','address','about','email']);
         res.send({ doctor, token: token });
+        }
+        catch(error){
+            console.log(error);
+        }
     }
     else if (req.body.role === 'admin' || req.body.role === 'staff') {
-        // console.log("Staff");
+        try{
         let staff = await Staff.findOne({ email: req.body.email });
         if (!staff) return res.status(400).send('Invalid emaiil or password');
 
@@ -38,7 +43,12 @@ router.post('/', async (req, res) => {
         if (!validPassword) return res.status(400).send('Invalid email or passwword');
 
         const token = staff.generateAuthToken();
+        staff = _.pick(staff, ['name','age','phone','address','email']);
         res.send({ staff, token });
+        }
+        catch(error){
+            console.log(error);
+        }
     }
 });
 

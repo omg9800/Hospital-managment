@@ -13,12 +13,18 @@ const { Patient, validatePatient } = require('../models/patient');
 //GET ALL PATIENT CALL
 
 router.get('/', [auth,staff_admin] , async (req,res) => {
-     const patients = await Doctor.find().sort('name');
-     res.send(patients);
+    try{
+     const doctors = await Doctor.find().sort('name');
+     res.send(doctors);
+    }
+    catch(error){
+        console.log(error);
+    }
 });
 
 //PUT CALL
 router.put('/:id', [auth,admin], async (req,res) => {
+    try{
     const result = validateDoctor(req.body);
     if(result.error) return res.status(400).send(result.error.details[0].message);
     let doctor;
@@ -37,27 +43,40 @@ router.put('/:id', [auth,admin], async (req,res) => {
         const salt = await bcrypt.genSalt(10);
         doctor.password = await bcrypt.hash(doctor.password,salt);
 
-    if(!doctor) return res.status(404).send("The Doctor is not found");
+      if(!doctor) return res.status(404).send("The Doctor is not found");
 
-    res.send(doctor);
+      res.send(doctor);
+    }
+    catch(error){
+        console.log(error);
+    }
 });
 
-//DELETE CALL on deleteing patient from doctor's list
+//DELETE CALL on deleting doctor from doctor's list
 router.delete('/:id',  [auth,admin],async (req,res) => {
-
+  try{
     let doctor = await Doctor.deleteOne({_id: req.params.id });
-    if(!doctor)   return res.status(404).send("The Patient is not found")
+    if(!doctor)   return res.status(404).send("The Doctor is not found")
 
     res.send(doctor);
+  }
+  catch(error){
+    console.log(error);
+  }
 });
 
 //GET SINGLE CALL
 router.get('/:id',[auth,staff_admin] ,async (req,res) => {
+     try{
      const doctor = await Doctor.findById(req.params.id);
 
      if(!doctor) return res.status(404).send("The Doctor is not found");
 
      res.send(doctor);
+     }
+     catch(error){
+        console.log(error);
+     }
 });
 
 module.exports = router;
