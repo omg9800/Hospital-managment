@@ -115,12 +115,12 @@ const AddStaff = () => {
             />
           </li>
 
-           
-
-</div>
-          <li>
+            <li>
             <button onClick={addStaff}>ADD</button>
           </li>
+
+</div>
+         
         
       </div>
   )

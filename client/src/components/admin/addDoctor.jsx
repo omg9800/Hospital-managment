@@ -138,11 +138,12 @@ const AddDoctor = () => {
               onChange={handleChange}
             />
           </li>
-
-</div>
-          <li>
+           <li>
             <button onClick={addDoctor}>ADD</button>
           </li>
+
+</div>
+         
         
       </div>
   )
