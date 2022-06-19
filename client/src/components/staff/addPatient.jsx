@@ -28,7 +28,7 @@ const AddPatient = () => {
 
   return (
     <div className="form-container">
-        <form>
+        <div className="form">
           <li>
             <h1>Add Patient</h1>
           </li>
@@ -80,7 +80,7 @@ const AddPatient = () => {
           <li>
             <button onClick={handleSubmit}>ADD</button>
           </li>
-        </form>
+        </div>
       </div>
   )
 }
