@@ -52,20 +52,11 @@ router.post('/', [auth,doctor_staff_admin] , async (req,res) => {
     res.send(appointment);
 });
 
-router.delete('/:id1/:id2', [auth,doctor_staff_admin] , async (req,res) => {
-    
-    let doctor = await Doctor.findById(req.params.id1);
-    if(!doctor) return res.status(404).send('Doctor Not Found');
+router.delete('/:id', [auth,doctor_staff_admin] , async (req,res) => {
 
-    const patient = await Patient.findById(req.params.id2);
-    if(!patient) return  res.status(404).send('Patient Not Found');
-
-    var id = req.params.id;       
-    var doctor_id = new ObjectId(req.params.id1);
-    var patient_id =  new ObjectId(req.params.id2);
-
-    doctor = await Appointment.deleteOne({doctor: doctor_id, patient:patient_id});
-    res.send(doctor);
+    let patient = await Patient.deleteOne({email: req.body.email});
+    appointment = await Appointment.deleteOne({_id: req.params.id });
+    res.send(appointment);
 
 });
 
