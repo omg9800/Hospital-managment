@@ -21,10 +21,12 @@ function Home() {
 
     try {
       
+      let tok=JSON.parse(localStorage.getItem('staff-token'));
    let res=await fetch('http://localhost:3000/api/auth',{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "x-auth-token":tok
     },
     body: JSON.stringify(person)});
    
