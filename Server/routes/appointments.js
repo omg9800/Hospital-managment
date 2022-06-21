@@ -63,10 +63,10 @@ router.delete('/:id', [auth,doctor_staff_admin] , async (req,res) => {
 });
 
 router.get('/:id', [auth,doctor_staff_admin] , async (req,res) => {
-    const appointments = await Appointment.findById(req.params.id);
-    if(!appointment) return res.status(404).send("There is no appointment");
+    const appointments = await Appointment.findOne({ doctorId:req.params.id });
+    if(!appointments) return res.status(404).send("There is no appointment");
 
-    res.send(appointment);
+    res.send(appointments);
 });
 
 module.exports = router;
