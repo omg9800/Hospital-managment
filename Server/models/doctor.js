@@ -43,7 +43,6 @@ const doctorSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
         minlength: 5,
         maxlength: 255
     },
@@ -75,7 +74,7 @@ const validateDoctor = doctor => {
         phone: Joi.string().min(10).max(10).required(),
         specialization: Joi.string().min(5).max(50).required(),
         address: Joi.string().min(5).max(100).required(),
-        email: Joi.string().min(5).max(255).required().email(),
+        email: Joi.string().min(5).max(255).required(),
         password: Joi.string().min(5).max(255).required(),
         role: Joi.string().required(),
     });
