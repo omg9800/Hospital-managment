@@ -46,23 +46,6 @@ const appointmentSchema = new mongoose.Schema({
        },
        dateDischarge: {
               type: Date,
-       },
-       email: {
-              type: String,
-              unique: true,
-              minlength: 5,
-              required: true,
-              maxlength: 255
-       },
-       password: {
-              type: String,
-              minlength: 5,
-              required: true,
-              maxlength: 1024
-       },
-       role: {
-              type: String,
-              required: true,
        }
 });
 
@@ -76,10 +59,7 @@ const validateAppointment = appointment => {
               weight: Joi.number().required(),
               symptoms: Joi.string().required(),
               phone: Joi.string().min(10).max(10).required(),
-              address: Joi.string().min(5).max(100).required(),
-              email: Joi.string().min(5).max(255).required(),
-              password: Joi.string().min(5).max(255).required(),
-              role: Joi.string().required(),
+              address: Joi.string().min(5).max(100).required()
        });
        return schema.validate(appointment);
 }

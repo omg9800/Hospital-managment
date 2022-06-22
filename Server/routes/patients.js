@@ -1,3 +1,4 @@
+const Speakeasy = require("speakeasy");
 const  auth = require('../middleware/auth');
 const  admin = require('../middleware/admin');
 const  staff = require('../middleware/staff');
@@ -15,6 +16,23 @@ const { Doctor, validateDoctor } = require('../models/doctor');
 router.get('/',[auth,doctor_staff_admin] ,async (req,res) => {
      const patients = await Patient.find().sort('name');
      res.send(patients);
+});
+
+router.get('/otp-generate/:phone', async (req,res) => {
+    
+    let patient = await Patient.findOne({ phone: req.params.phone });
+    if (!patient) return res.status(400).send('Invalid number ');
+     let secret = patient.secretKey;
+    var otp = Speakeasy.totp({
+        secret: secret,
+        encoding: "base32"
+    });
+    var remainingTime = (50 - Math.floor((new Date()).getTime() / 1000.0 % 30));
+
+    // patient.password = otp;
+    // patient.save();
+
+   res.send({otp,remainingTime});
 });
 
 //POST CALL
@@ -35,7 +53,7 @@ router.post('/',[auth,staff_admin], async (req,res) => {
        res.send(patient);
 });
 
-//PUT CALL
+//PUT CALL WORK HAVE TO DO
 router.put('/:id',[auth,staff_admin], async (req,res) => {
     const result = validatePatient(req.body);
     if(result.error) return res.status(400).send(result.error.details[0].message);
@@ -51,9 +69,6 @@ router.put('/:id',[auth,staff_admin], async (req,res) => {
         patient.phone = req.body.phone;
         patient.symptoms = req.body.symptoms;
         patient.address = req.body.address;
-        patient.email = req.body.email;
-        patient.password = req.body.password;
-        patient.role= req.body.role;
     }
 
     patient  = await patient.save();
