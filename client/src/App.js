@@ -9,6 +9,7 @@ import AdminMenu from "./components/admin/main";
 import PatientCard from "./components/patientCard/PatientCard";
 import PatientDetail from "./components/patientList";
 import DoctorMenu from "./components/doctor/menu";
+import LoginForm from "./components/patient/loginForm";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route path="/doctor">
           <DoctorMenu />
+        </Route>
+        <Route path="/patient">
+          <LoginForm />
         </Route>
 
         <Route path="/">

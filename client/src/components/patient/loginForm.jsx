@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Redirect, Route, useHistory,Link } from "react-router-dom";
+import React,{useState,useEffect} from 'react'
+import { useHistory } from 'react-router';
 
-function Home() {
-  const [person, setPerson] = useState({
-    email: "",
+const LoginForm = () => {
+
+    const [person, setPerson] = useState({
+    phone: "",
     password: "",
-    role: "admin",
+    role: "patient",
   });
 
   const history = useHistory();
@@ -58,44 +59,38 @@ function Home() {
 
    
   };
-
   return (
-    <div className="homeParent">
+<div className="homeParent">
       <div className="form">
-        <li>
-          <select name="role" value={person.role} onChange={handleChange}>
-            <option value="admin">Admin</option>
-            <option value="doctor">Doctor</option>
-            <option value="staff">Staff</option>
-          </select>
-        </li>
+     
         <li>
           <input
-            placeholder="Email"
+            placeholder="phone"
             type="text"
-            name="email"
-            value={person.username}
+            name="phone"
+            value={person.phone}
             onChange={handleChange}
           />
         </li>
         <li>
           <input
-            placeholder="Password"
+            placeholder="password"
             type="password"
             name="password"
             value={person.password}
             onChange={handleChange}
           />
         </li>
-        <li>
-          <button onClick={handleSubmit}>Login</button>
-        </li>
          <li>
-          <Link to="/patient">Login as Patient</Link>
+          <button onClick={()=>{}}>Request Otp</button>
         </li>
+        <li>
+          <button onClick={()=>{}}>Login</button>
+        </li>
+        
       </div>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default LoginForm

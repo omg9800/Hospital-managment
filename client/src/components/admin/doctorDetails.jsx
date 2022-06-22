@@ -1,10 +1,13 @@
 import React, { useState,useEffect } from "react";
+import {useLocation} from 'react-router-dom';
 // import Card from '../doctorCard';
 import Card from "../doctorCard/DoctorCard";
 
-const DoctorDetails = () => {
+const DoctorDetails = ({role}) => {
 
   const [doctors, setDoctors] = useState([]);
+
+  const location=useLocation();
 
   useEffect(() => {
    
@@ -13,8 +16,12 @@ const DoctorDetails = () => {
   }, [])
 
   const fetchDoctors=async()=>{
+   let token;
+      if(location.pathname=='/staff/view-doctors')
+     token=JSON.parse(localStorage.getItem('staff-token'));
+     else
+          token=JSON.parse(localStorage.getItem('admin-token'));
 
-    const token=JSON.parse(localStorage.getItem('admin-token'));
 
    let res=await fetch('http://localhost:3000/api/doctors',{
     method: "GET",
