@@ -1,39 +1,43 @@
-import React, { useState,useEffect } from "react";
+import React, { Component } from "react";
 import PatientCard from "./patientCard/PatientCard";
 import SearchBar from './searchBar';
 
 const PatientList=() =>{
  
-  const [patients, setPatients] = useState([]);
-
-let data=patients;
-
-useEffect(() => {
- getPatients()
-}, [])
-
-
-  const getPatients=async()=>{
-
-    try {
-      let token=JSON.parse(localStorage.getItem('staff-token'))
-      let res=await fetch('http://localhost:3000/api/patients',{
-      method:'GET',
-      headers:{
-        'Content-Type':'application/json',
-        'x-auth-token':token
-      }
-    });
-
-    res=await res.json();
-    setPatients(res);
-    console.log(res);
-  }
-     catch (error) {
-      console.log(error);
-    }
-
-  }
+   const data= [
+      {
+        Name: "Prakash Singh",
+        Age: 21,
+        Weight: 53,
+        Symptoms: "Fever",
+        Phone: "9987654321",
+        Address: "Patna, Bihar",
+      },
+      {
+        Name: "Naresh Singh",
+        Age: 21,
+        Weight: 53,
+        Symptoms: "Fever",
+        Phone: "9987654321",
+        Address: "Patna, Bihar",
+      },
+      {
+        Name: "Naresh Singh",
+        Age: 21,
+        Weight: 53,
+        Symptoms: "Fever",
+        Phone: "9987654321",
+        Address: "Patna, Bihar",
+      },
+      {
+        Name: "Naresh Singh",
+        Age: 21,
+        Weight: 53,
+        Symptoms: "Fever",
+        Phone: "9987654321",
+        Address: "Patna, Bihar",
+      },
+    ];
 
 
     return (
@@ -41,8 +45,8 @@ useEffect(() => {
         <SearchBar/>
        
       <div className="list">
-        {patients.map((m) => (
-          <PatientCard item={m}/>
+        {data.map((m) => (
+          <PatientCard />
         ))}
       </div>
       </div>

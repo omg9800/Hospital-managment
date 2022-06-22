@@ -13,7 +13,7 @@ const DoctorCard = ({ item}) => {
     const path=(role=="staff"?"./add-patient":"./edit");
     
 
-    history.push(path, { doctor: item });
+    history.push(path, { state: { item } });
   };
 
   const getStaffRole=()=>{

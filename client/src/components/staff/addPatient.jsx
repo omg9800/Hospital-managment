@@ -1,6 +1,4 @@
 import React, { useState,useEffect } from "react";
-import {useLocation} from 'react-router-dom'
-
 
 
 const AddPatient = () => {
@@ -8,20 +6,12 @@ const AddPatient = () => {
   const [patient, setPatient] = useState({
     name: "",
     age: "",
-    weight: "",
+    weight: 0,
     symptoms: "",
     address: "",
-    phone:"",
-    email:"",
-    password:"",
-    doctorId:"",
-    role:"staff"
+    phone:""
+
   })
-
-  // const [doctorName, setDoctorName] = useState(second)
-
-  const location=useLocation();
-
 
  const handleChange = (e) => {
     e.preventDefault();
@@ -30,41 +20,11 @@ const AddPatient = () => {
     setPatient(prev=>({...prev, [name]: value }));
   };
 
+  const handleSubmit = (e) => {
+    console.log(this.state);
 
-
-  const handleSubmit = async(e) => {
-   
-    const staffToken=JSON.parse(localStorage.getItem('staff-token'))
-    try {
-      let res=await fetch('http://localhost:3000/api/appointments',{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        'x-auth-token':staffToken
-      },
-      body:JSON.stringify(patient)
-
-    })
-   
-    res=await res.json();
-    console.log(res);
- 
-      e.preventDefault();
-    } catch (error) {
-      console.log(error);
-    }
-   
+    e.preventDefault();
   };
-
-
-  useEffect(() => {
-    console.log(location.state,location.state.doctor);
-    const { _id:doctorId,name:doctorName}=location.state.doctor;
-    setPatient(prev=>({...prev,doctorId:doctorId}))
-  }, [])
-
-  console.log(patient);
-  
 
   return (
     <div className="form-container">
@@ -83,42 +43,6 @@ const AddPatient = () => {
           </li>
           <li>
             <input
-              placeholder="Phone"
-              type="text"
-              name="phone"
-              value={patient.phone}
-              onChange={handleChange}
-            />
-          </li>
-            <li>
-            <input
-              placeholder="Doctor Name"
-              type="text"
-              name="doctorName"
-              value={location.state.doctor.name}
-              // onChange={handleChange}
-            />
-          </li>
-           <li>
-            <input
-              placeholder="Email"
-              type="email"
-              name="email"
-              value={patient.email}
-              onChange={handleChange}
-            />
-          </li>
-           <li>
-            <input
-              placeholder="Password"
-              type="Password"
-              name="password"
-              value={patient.password}
-              onChange={handleChange}
-            />
-          </li>
-          <li>
-            <input
               placeholder="Age"
               type="number"
               name="age"
@@ -129,7 +53,7 @@ const AddPatient = () => {
           <li>
             <input
               placeholder="Weight"
-              type="text"
+              type="number"
               name="weight"
               value={patient.weight}
               onChange={handleChange}
@@ -137,10 +61,10 @@ const AddPatient = () => {
           </li>
           <li>
             <input
-              placeholder="Symptoms"
+              placeholder="Problem"
               type="text"
-              name="symptoms"
-              value={patient.symptoms}
+              name="problem"
+              value={patient.problem}
               onChange={handleChange}
             />
           </li>

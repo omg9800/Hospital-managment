@@ -31,28 +31,28 @@ const PatientCard = ({ item,role}) => {
           <div className="group2">
             <div>
               <p className="bold">Name</p>
-              <p>{item.name}</p>
+              <p>{"Namiata Saxen"}</p>
             </div>
             <div>
               <p className="bold">Age</p>
-              <p>{item.age}</p>
+              <p>{"21"}</p>
             </div>
           </div>
           <div className="group2">
             <div>
               <p className="bold">Weight</p>
-              <p>{item.weight}</p>
+              <p>{"50"}</p>
             </div>
             <div>
               <p className="bold">Symptoms</p>
-              <p>{item.symptoms}</p>
+              <p>{"Fever"}</p>
             </div>
           </div>
         </div>
         <div className="long-text">
           <div className="about">
             <p className="bold">Address</p>
-            <p>{item.address}</p>
+            <p>{"Patna, Bihar"}</p>
           </div>
         </div>
       </div>
