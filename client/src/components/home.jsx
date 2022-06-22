@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route, useHistory } from "react-router-dom";
+import { Redirect, Route, useHistory,Link } from "react-router-dom";
 
 function Home() {
   const [person, setPerson] = useState({
@@ -22,6 +22,7 @@ function Home() {
     try {
       
       let tok=JSON.parse(localStorage.getItem('staff-token'));
+      console.log(tok);
    let res=await fetch('http://localhost:3000/api/auth',{
     method: "POST",
     headers: {
@@ -32,6 +33,7 @@ function Home() {
    
     res=await res.json();
 
+    console.log(res);
     const {doctor,token,staff}=res;
     
     if(doctor)
@@ -87,6 +89,9 @@ function Home() {
         </li>
         <li>
           <button onClick={handleSubmit}>Login</button>
+        </li>
+         <li>
+          <Link to="/patient">Login as Patient</Link>
         </li>
       </div>
     </div>

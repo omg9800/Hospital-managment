@@ -17,36 +17,36 @@ router.post('/', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     if (req.body.role === 'doctor') {
-        try{
-        let doctor = await Doctor.findOne({ email: req.body.email });
-        if (!doctor) return res.status(400).send('Invalid emaiil or password');
+        try {
+            let doctor = await Doctor.findOne({ email: req.body.email });
+            if (!doctor) return res.status(400).send('Invalid emaiil or password');
 
-        //Encrypting password
-        const validPassword = await bcrypt.compare(req.body.password, doctor.password);
-        if (!validPassword) return res.status(400).send('Invalid email or passwword');
+            //Encrypting password
+            const validPassword = await bcrypt.compare(req.body.password, doctor.password);
+            if (!validPassword) return res.status(400).send('Invalid email or passwword');
 
-        const token = doctor.generateAuthToken();
-        doctor = _.pick(doctor, ['name','age','phone','specialization','address','about','email']);
-        res.send({ doctor, token: token });
+            const token = doctor.generateAuthToken();
+            doctor = _.pick(doctor, ['name', 'age', 'phone', 'specialization', 'address', 'about', 'email', 'role']);
+            res.send({ doctor, token: token });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
     else if (req.body.role === 'admin' || req.body.role === 'staff') {
-        try{
-        let staff = await Staff.findOne({ email: req.body.email });
-        if (!staff) return res.status(400).send('Invalid emaiil or password');
+        try {
+            let staff = await Staff.findOne({ email: req.body.email });
+            if (!staff) return res.status(400).send('Invalid emaiil or password');
 
-        //Encrypting password
-        const validPassword = await bcrypt.compare(req.body.password, staff.password);
-        if (!validPassword) return res.status(400).send('Invalid email or passwword');
+            //Encrypting password
+            const validPassword = await bcrypt.compare(req.body.password, staff.password);
+            if (!validPassword) return res.status(400).send('Invalid email or passwword');
 
-        const token = staff.generateAuthToken();
-        staff = _.pick(staff, ['name','age','phone','address','email']);
-        res.send({ staff, token });
+            const token = staff.generateAuthToken();
+            staff = _.pick(staff, ['name', 'age', 'phone', 'address', 'email', 'role']);
+            res.send({ staff, token });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
