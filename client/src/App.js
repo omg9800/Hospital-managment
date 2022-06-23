@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { io } from "socket.io-client";
+
 import "./App.css";
 import "./components/style.scss";
 
@@ -12,6 +15,14 @@ import DoctorMenu from "./components/doctor/menu";
 import LoginForm from "./components/patient/loginForm";
 
 function App() {
+
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    console.log(socket);
+  }, []);
+
+
+
   return (
     <div>
       <Switch>
