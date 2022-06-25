@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { io } from "socket.io-client";
 
@@ -16,12 +16,17 @@ import LoginForm from "./components/patient/loginForm";
 
 function App() {
 
+  const [socket, setSocket] = useState(null);
+
+  const [person, setPerson] = useState({
+    email: "",
+    password: "",
+    role: "admin",
+  });
+
   useEffect(() => {
-    const socket = io("http://localhost:5000");
-    console.log(socket);
+    setSocket(io("http://localhost:5000"));
   }, []);
-
-
 
   return (
     <div>
@@ -30,18 +35,18 @@ function App() {
           <AdminMenu />
         </Route>
         <Route path="/staff">
-          <Menu />
+          <Menu doctor={person} socket={socket} />
           {/* <PatientCard /> */}
         </Route>
         <Route path="/doctor">
-          <DoctorMenu />
+          <DoctorMenu socket={socket} />
         </Route>
         <Route path="/patient">
-          <LoginForm />
+          <LoginForm socket={socket} />
         </Route>
 
         <Route path="/">
-          <Home />
+          <Home person={person} setPerson={setPerson} socket={socket} />
         </Route>
       </Switch>
     </div>

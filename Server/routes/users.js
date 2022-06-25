@@ -1,5 +1,4 @@
 const Speakeasy = require("speakeasy");
-const { Server } = require('socket.io')
 const staff_admin = require('../middleware/staff-admin');
 const auth = require('../middleware/auth');
 const config = require('config');
@@ -12,70 +11,7 @@ const mongoose = require('mongoose');
 const { Doctor, validateDoctor } = require('../models/doctor');
 const { Staff, validateStaff } = require('../models/staff');
 
-io = new Server({
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
-
-// io = io.listen(5000)
-
-
-// let onlineUsers = [];
-
-// const addNewUser = (username, socketId) => {
-//   !onlineUsers.some((user) => user.username === username) &&
-//     onlineUsers.push({ username, socketId });
-// };
-
-// const removeUser = (socketId) => {
-//   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
-// };
-
-// const getUser = (username) => {
-//   return onlineUsers.find((user) => user.username === username);
-// };
-
-
-// io.on("connection", (socket) => {
-//   socket.on("newUser", (username) => {
-//     // addNewUser(username, socket.id);
-//     console.log('socket connected.');
-//   });
-
-//   socket.on("sendNotification", ({ senderName, receiverName, type }) => {
-//     const receiver = getUser(receiverName);
-//     io.to(receiver.socketId).emit("getNotification", {
-//       senderName,
-//       type,
-//     });
-//   });
-
-//   socket.on("sendText", ({ senderName, receiverName, text }) => {
-//     const receiver = getUser(receiverName);
-//     io.to(receiver.socketId).emit("getText", {
-//       senderName,
-//       text,
-//     });
-//   });
-
-//   socket.on("disconnect", () => {
-//     removeUser(socket.id);
-//   });
-// });
-
-
-
-io.on("connection", (socket) => {
-  console.log('socket connected.');
-
-  socket.on("disconnect", () => {
-    // addNewUser(username, socket.id);
-    console.log('disconnected');
-  });
-})
 //API CALLS
-
 
 router.get('/me', auth, async (req, res) => {
   const user = await User.findById(req.user._id).select('-password');

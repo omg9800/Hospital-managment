@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route, useHistory,Link } from "react-router-dom";
 
-function Home() {
-  const [person, setPerson] = useState({
-    email: "",
-    password: "",
-    role: "admin",
-  });
+function Home({person,socket,setPerson}) {
+
+
+
+  // useEffect(() => {
+  //   socket?.emit("newUser", person);
+  // }, [socket]);
+
+
 
   const history = useHistory();
 
@@ -21,9 +24,9 @@ function Home() {
 
     try {
       
-      let tok=JSON.parse(localStorage.getItem('staff-token'));
-      console.log(tok);
-   let res=await fetch('http://localhost:3000/api/auth',{
+    let tok=JSON.parse(localStorage.getItem('staff-token'));
+    console.log(tok);
+    let res=await fetch('http://localhost:3000/api/auth',{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -35,13 +38,18 @@ function Home() {
 
     console.log(res);
     const {doctor,token,staff}=res;
-    
+
+
     if(doctor)
     {
     localStorage.setItem('doctor',JSON.stringify(doctor));
+    console.log(doctor.email);
+      socket?.emit("newUser", doctor.email);
     }
     else{
       localStorage.setItem('staff',JSON.stringify(staff));
+      console.log(staff.email);
+        socket?.emit("newUser", staff.email);
     }
     localStorage.setItem(`${person.role}-token`,JSON.stringify(token));
 
@@ -54,8 +62,6 @@ function Home() {
     } catch (error) {
       console.log(error);
     }
-   
-
    
   };
 

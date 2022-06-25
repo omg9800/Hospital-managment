@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom'
 
 
 
-const AddPatient = () => {
+const AddPatient = ({socket,doctor:staff}) => {
 
   const [patient, setPatient] = useState({
     name: "",
@@ -12,13 +12,10 @@ const AddPatient = () => {
     symptoms: "",
     address: "",
     phone:"",
-    email:"",
-    password:"",
     doctorId:"",
-    role:"staff"
+  
   })
-
-  // const [doctorName, setDoctorName] = useState(second)
+  
 
   const location=useLocation();
 
@@ -48,7 +45,14 @@ const AddPatient = () => {
    
     res=await res.json();
     console.log(res);
+
  
+    socket.emit("sendNotification", {
+      senderName: staff.email,
+      receiverName: location.state.doctor.email,
+     
+    });
+
       e.preventDefault();
     } catch (error) {
       console.log(error);
@@ -60,6 +64,7 @@ const AddPatient = () => {
   useEffect(() => {
     console.log(location.state,location.state.doctor);
     const { _id:doctorId,name:doctorName}=location.state.doctor;
+    console.log(location.state.doctor,'doctor==========');
     setPatient(prev=>({...prev,doctorId:doctorId}))
   }, [])
 
@@ -99,7 +104,7 @@ const AddPatient = () => {
               // onChange={handleChange}
             />
           </li>
-           <li>
+           {/* <li>
             <input
               placeholder="Email"
               type="email"
@@ -116,7 +121,7 @@ const AddPatient = () => {
               value={patient.password}
               onChange={handleChange}
             />
-          </li>
+          </li> */}
           <li>
             <input
               placeholder="Age"
