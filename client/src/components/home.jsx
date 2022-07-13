@@ -66,7 +66,7 @@ function Home({person,socket,setPerson}) {
   };
 
   return (
-    <div className="homeParent">
+    <div className="home-parent">
       <div className="form">
         <li>
           <select name="role" value={person.role} onChange={handleChange}>
@@ -94,10 +94,10 @@ function Home({person,socket,setPerson}) {
           />
         </li>
         <li>
-          <button onClick={handleSubmit}>Login</button>
+          <button className="btn" onClick={handleSubmit}>Login</button>
         </li>
          <li>
-          <Link to="/patient">Login as Patient</Link>
+          <Link className="link" to="/patientLogin">Login as Patient</Link>
         </li>
       </div>
     </div>

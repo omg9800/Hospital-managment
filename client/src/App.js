@@ -13,6 +13,8 @@ import PatientCard from "./components/patientCard/PatientCard";
 import PatientDetail from "./components/patientList";
 import DoctorMenu from "./components/doctor/menu";
 import LoginForm from "./components/patient/loginForm";
+import PatientMenu from './components/patient/menu';
+import DoctorList from "./components/admin/doctorDetails";
 
 function App() {
 
@@ -22,6 +24,12 @@ function App() {
     email: "",
     password: "",
     role: "admin",
+  });
+
+  const [patient, setPatient] = useState({
+    phone: "",
+    password: "",
+    role: "patient",
   });
 
   useEffect(() => {
@@ -41,9 +49,18 @@ function App() {
         <Route path="/doctor">
           <DoctorMenu socket={socket} />
         </Route>
+
         <Route path="/patient">
-          <LoginForm socket={socket} />
+          {/* <LoginForm socket={socket} /> */}
+          <PatientMenu person={patient} socket={socket} />
         </Route>
+
+        <Route path="/patientLogin">
+          <LoginForm socket={socket} person={patient} setPerson={setPatient} />
+          {/* <PatientMenu /> */}
+        </Route>
+
+
 
         <Route path="/">
           <Home person={person} setPerson={setPerson} socket={socket} />

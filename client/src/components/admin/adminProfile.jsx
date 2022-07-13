@@ -1,5 +1,5 @@
 import React, { useEffect,useState} from "react";
-import userlogo from "../../styles/user.png";
+import userlogo from "../../img/profile.png";
 
 
 const AdminProfile = () => {
