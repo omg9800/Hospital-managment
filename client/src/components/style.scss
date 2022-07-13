@@ -2,7 +2,9 @@
   box-sizing: border-box;
 }
 
-.homeParent {
+
+
+.home-parent {
   background: linear-gradient(to right, rgba(red, 0.5), rgba(red, 0.4)),
     url("../styles/2 (2).jpg");
   position: relative;
@@ -10,6 +12,9 @@
   height: 100vh;
   background-size: cover;
   list-style-type: none;
+}
+
+.home-parent {
 
   .form {
     padding-top: 5%;
@@ -17,39 +22,71 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 50%;
+    height: max-content;
+    min-height: 40%;
+    min-width: 300px;
+    padding-bottom: 2%;
     width: 50%;
     background: linear-gradient(to right, rgba(black, 0.5), rgba(black, 0.6));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    select {
-      padding: 1vh;
-      margin-bottom: 3vh;
-      margin-left: 25vw;
-      width: 15%;
-      top: 50%;
-      left: 60%;
-      transform: translate(-50%, -50%);
+    li {
+      width: 60%;
+      height: 40px;
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      select,
+      input {
+        padding-left: 10px;
+        width: 100%;
+        height: 100%;
+        font-size: .9rem;
+      }
+
+      .btn {
+        width: 100%;
+        height: 100%;
+        background-color: green;
+        font-size: .9rem;
+        font-weight: 700;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .otp {
+        background-color: blue;
+      }
+
+      .link {
+        display: inline-block;
+        width: 50%;
+        height: 100%;
+        // text-decoration: underline;
+        font-size: .9rem;
+        font-weight: 700;
+        color: rgb(119, 119, 210);
+        text-align: center;
+        // background-color: green;
+        z-index: 60;
+
+      }
+
+
     }
 
-    input {
-      padding: 1vh;
-      margin-bottom: 3vh;
-      margin-left: 25vw;
-      width: 25%;
-      top: 50%;
-      left: 150vh;
-      transform: translate(-50%, -50%);
+    li:last-child {
+      margin-top: 30px;
     }
 
-    button {
-      padding: 1vh;
-      margin-bottom: 3vh;
-      margin-left: 25vw;
-      width: 15%;
-      top: 50%;
-      left: 150vh;
-      transform: translate(-50%, -50%);
-    }
   }
 }
 
@@ -71,8 +108,11 @@
     top: 50%;
     left: 60%;
     transform: translate(-50%, -50%);
+    padding-bottom: 2%;
 
     li {
+
+
       input {
         width: 50%;
         padding: 0.4vh;
@@ -81,6 +121,18 @@
       textarea {
         width: 50%;
         padding: 1.5vh;
+      }
+
+      .btn-add {
+        width: 50%;
+        height: 40px;
+        background-color: green;
+        font-size: .9rem;
+        font-weight: 700;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
       }
 
       margin-bottom: 2vh;
@@ -103,13 +155,21 @@
 
     ul {
       list-style-type: none;
+      padding: 0;
 
       .nav-item {
         padding: 1vh;
         font-size: 2.4vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
 
         .nav-link {
+          width: 50%;
+          text-align: left;
           text-decoration: none;
+          font-weight: 600;
+          // font-size: 110%;
         }
       }
     }
@@ -237,4 +297,84 @@
   padding: 10px 30px;
   width: 50%;
   border-radius: 7px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar {
+  height: 50px;
+  background-color: lightseagreen;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  position: relative;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-left: 15px;
+  cursor: pointer;
+  position: relative;
+}
+
+.iconImg {
+  width: 20px;
+  height: 20px;
+}
+
+.counter {
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.notifications {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  color: black;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.notification {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.nButton {
+  width: 80%;
+  padding: 5px;
+  margin-top: 10px;
 }

@@ -1,19 +1,38 @@
 import React, { useState,useEffect } from "react";
 import {useLocation} from 'react-router-dom';
-// import Card from '../doctorCard';
 import Card from "../doctorCard/DoctorCard";
+import SearchBar from "../searchBar";
 
-const DoctorDetails = ({role}) => {
+const DoctorDetails = () => {
 
   const [doctors, setDoctors] = useState([]);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [searchText, setSearchText] = useState("")
+  
 
   const location=useLocation();
 
   useEffect(() => {
    
     fetchDoctors();
-
   }, [])
+
+  useEffect(() => {
+
+   let filtered = doctors.filter((m) =>
+        m.name.toLowerCase().startsWith(searchText.toLowerCase())
+      );
+
+    setFilteredDoctors(filtered);
+    console.log(searchText,filtered);
+
+  }, [searchText])
+  
+
+  const handleSearch=(e)=>{
+    let val=e.target.value;
+    setSearchText(val);
+  }
 
   const fetchDoctors=async()=>{
    let token;
@@ -33,16 +52,22 @@ const DoctorDetails = ({role}) => {
 
     res=await res.json();
     setDoctors(res)
+    setFilteredDoctors(res)
     
   }
   
 
   return (
+    <div className="list-container">
+       <SearchBar searchText={searchText} handleSearch={handleSearch}/>
+       {/* <input type="text" name="searchText" value={searchText} onChange={handleSearch}/> */}
+    
     <div className="list">
         {
-          doctors.map(m=><Card item={m}/>)
+          filteredDoctors.map(m=><Card item={m}/>)
         }
       
+      </div>
       </div>
   )
 }

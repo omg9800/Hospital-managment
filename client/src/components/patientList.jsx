@@ -5,8 +5,25 @@ import SearchBar from './searchBar';
 const PatientList=() =>{
  
   const [patients, setPatients] = useState([]);
+  const [filteredPatients, setFilteredpatients] = useState([]);
+  const [searchText, setSearchText] = useState("")
+  
+  useEffect(() => {
 
-let data=patients;
+   let filtered = patients.filter((m) =>
+        m.name.toLowerCase().startsWith(searchText.toLowerCase())
+      );
+
+    setFilteredpatients(filtered);
+    console.log(searchText,filtered);
+
+  }, [searchText])
+
+    const handleSearch=(e)=>{
+    let val=e.target.value;
+    setSearchText(val);
+  }
+
 
 useEffect(() => {
  getPatients()
@@ -27,6 +44,7 @@ useEffect(() => {
 
     res=await res.json();
     setPatients(res);
+    setFilteredpatients(res)
     console.log(res);
   }
      catch (error) {
@@ -38,10 +56,10 @@ useEffect(() => {
 
     return (
       <div className="list-container">
-        <SearchBar/>
+        <SearchBar searchText={searchText} handleSearch={handleSearch}/>
        
       <div className="list">
-        {patients.map((m) => (
+        {filteredPatients.map((m) => (
           <PatientCard item={m}/>
         ))}
       </div>

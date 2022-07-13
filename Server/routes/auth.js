@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
             if (!validPassword) return res.status(400).send('Invalid email or passwword');
 
             const token = doctor.generateAuthToken();
-            doctor = _.pick(doctor, ['name', 'age', 'phone', 'specialization', 'address', 'about', 'email']);
+            doctor = _.pick(doctor, ['name', 'age', 'phone', 'specialization', 'address', 'about', 'email', '_id']);
             res.send({ doctor, token: token });
         }
         catch (error) {
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
             if (!validPassword) return res.status(400).send('Invalid email or passwword');
 
             const token = staff.generateAuthToken();
-            staff = _.pick(staff, ['name', 'age', 'phone', 'address', 'email', 'role']);
+            staff = _.pick(staff, ['name', 'age', 'phone', 'address', 'email', 'role', '_id']);
             res.send({ staff, token });
         }
         catch (error) {
@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
         if (!validPassword) return res.status(400).send('Invalid number or OTP');
 
         const token = patient.generateAuthToken();
-        patient = _.pick(patient, ['name', 'age', 'phone', 'address']);
+        patient = _.pick(patient, ['name', 'age', 'phone', 'address', '_id']);
         res.send({ patient, token });
     }
 });

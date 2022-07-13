@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-
+import '../../components/style.scss'
 
 
 const AddDoctor = () => {
@@ -139,7 +139,7 @@ const AddDoctor = () => {
             />
           </li>
            <li>
-            <button onClick={addDoctor}>ADD</button>
+            <button className="btn-add" onClick={addDoctor}>ADD</button>
           </li>
 
 </div>

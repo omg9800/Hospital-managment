@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavLink, Link, Route, Switch } from "react-router-dom";
 
 import ViewPatient from "../patientList";
@@ -6,10 +6,10 @@ import AddPatient from "./addPatient";
 import Profile from "./staffProfile";
 import DoctorList from "../admin/doctorDetails";
 
-class Menu extends React.Component {
-  render() {
-    return (
-      <div className="staff-container">
+const Menu = ({doctor,socket}) => {
+
+  return (
+    <div className="staff-container">
         <div className="profile">
           <ul className="navbar-ul">
             <li className="nav-item">
@@ -43,14 +43,13 @@ class Menu extends React.Component {
         <div className="content">
           <Switch>
             <Route exact path="/staff" component={Profile} />
-            <Route path="/staff/view-patient" exact component={ViewPatient} />
-            <Route path="/staff/view-doctors" exact component={DoctorList} />
-            <Route path="/staff/add-patient" exact component={AddPatient} />
+            <Route path="/staff/view-patient" > <ViewPatient/></Route>
+            <Route path="/staff/view-doctors"><DoctorList/> </Route> 
+            <Route path="/staff/add-patient"><AddPatient doctor={doctor} socket={socket}/></Route>
           </Switch>
         </div>
       </div>
-    );
-  }
+  )
 }
 
 export default Menu;

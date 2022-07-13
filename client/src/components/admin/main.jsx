@@ -13,6 +13,10 @@ import AddAdmin from "./addAdmin";
 import AddDoctor from "./addDoctor";
 import AddStaff from "./addStaff";
 import AdminProfile from "./adminProfile";
+import doctor from '../../img/doctor.svg';
+import profile from '../../img/profile.png';
+import patient from '../../img/patient.png';
+
 
 const Menu=()=>  {
 
@@ -21,6 +25,7 @@ const Menu=()=>  {
         <div className="profile">
           <ul className="navbar-ul">
             <li className="nav-item">
+              <img src={profile} width="35" height={35}/>
               <NavLink
                 className="nav-link"
                 aria-current="page"
@@ -30,18 +35,21 @@ const Menu=()=>  {
               </NavLink>
             </li>
             <li className="nav-item">
+              <img src={doctor} width="35" height={35}/>
               <NavLink className="nav-link" to="/admin/doctor-menu">
                 Doctors
               </NavLink>
             </li>
             
             <li className="nav-item">
+              <img src={patient} width="35" height={35}/>
               <NavLink className="nav-link" to="/admin/staff-menu">
                 Staffs
               </NavLink>
             </li>
 
             <li className="nav-item">
+              <img src={doctor} width="35" height={35}/>
               <NavLink className="nav-link" to="/">
                 Logout
               </NavLink>
@@ -67,7 +75,7 @@ const Menu=()=>  {
             <Route
               exact
               path="/admin/staff-menu/view-staffs"
-              component={ViewStaff}
+              component={<ViewStaff/>}
             />
             <Route
               exact

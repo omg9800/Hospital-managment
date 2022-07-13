@@ -116,7 +116,7 @@ const AddStaff = () => {
           </li>
 
             <li>
-            <button onClick={addStaff}>ADD</button>
+            <button className="btn-add" onClick={addStaff}>ADD</button>
           </li>
 
 </div>
