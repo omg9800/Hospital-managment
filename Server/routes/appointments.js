@@ -69,4 +69,17 @@ router.get('/:id', [auth, doctor_staff_admin], async (req, res) => {
     res.send(appointments);
 });
 
+router.post('/appointment', [auth], async (req, res) => {
+    console.log(req.body);
+    const appointment = await Appointment.findOne({ phone: req.body.phone });
+    console.log(appointment, "hi");
+    if (!appointment) return res.status(200).send({ msg: "The Appointment is not found" });
+
+    const doctor = await Doctor.findById(appointment.doctorId);
+
+    if (!doctor) return res.status(200).send({ msg: "The Doctor is not found" });
+
+    res.send(doctor);
+});
+
 module.exports = router;

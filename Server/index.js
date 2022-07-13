@@ -8,6 +8,7 @@ const staffs = require('./routes/staffs');
 const appointments = require('./routes/appointments');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const payments = require('./routes/payments');
 const cors = require('cors');
 
 
@@ -31,6 +32,7 @@ app.use('/api/staffs', staffs);
 app.use('/api/appointments', appointments);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/payments', payments);
 
 
 const port = process.env.PORT || 3000;
